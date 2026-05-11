@@ -1,0 +1,44 @@
+
+=== 2026-05-08 23:07:46 | First-Come First-Served | 3 patients ===
+Gantt Chart:
+| P1 [1778263590-1778263601] | P2 [1778263610-1778263619] | P3 [1778263628-1778263632] |
+ID    Name                 Burst    Wait     Turnaround Priority    
+1     Taha Sajid           11       0        11         1           
+2     Muhammad Umar        9        0        9          3           
+3     ALi Raza             4        0        4          3           
+Avg Waiting Time   : 0.00
+Avg Turnaround Time: 8.00
+
+
+=== 2026-05-08 23:07:46 | Priority Scheduling | 3 patients ===
+Gantt Chart:
+| P1 [1778263590-1778263601] | P2 [1778263610-1778263619] | P3 [1778263628-1778263632] |
+ID    Name                 Burst    Wait     Turnaround Priority    
+1     Taha Sajid           11       0        11         1           
+2     Muhammad Umar        9        0        9          3           
+3     ALi Raza             4        0        4          3           
+Avg Waiting Time   : 0.00
+Avg Turnaround Time: 8.00
+
+
+=== 2026-05-08 23:07:46 | Shortest Job First | 3 patients ===
+Gantt Chart:
+| P3 [1778263628-1778263632] | P2 [1778263632-1778263641] | P1 [1778263641-1778263652] |
+ID    Name                 Burst    Wait     Turnaround Priority    
+3     ALi Raza             4        0        4          3           
+2     Muhammad Umar        9        22       31         3           
+1     Taha Sajid           11       51       62         1           
+Avg Waiting Time   : 24.33
+Avg Turnaround Time: 32.33
+
+
+=== 2026-05-08 23:07:46 | Round Robin | 3 patients ===
+Gantt Chart:
+| P1 [0-24] | P2 [3-22] | P3 [6-16] |
+ID    Name                 Burst    Wait     Turnaround Priority    
+1     Taha Sajid           11       0        -1778263566 1           
+2     Muhammad Umar        9        0        -1778263588 3           
+3     ALi Raza             4        0        -1778263612 3           
+Avg Waiting Time   : 0.00
+Avg Turnaround Time: -1778263588.67
+

@@ -1,0 +1,187 @@
+
+╔══════════════════════════════════════════════════╗
+║    Hospital Patient Triage & Bed Allocator       ║
+║    CL2006 — Operating Systems Lab  Spring 2026   ║
+╠══════════════════════════════════════════════════╣
+║  Ward Capacity:                                   ║
+║    ICU        :  4 beds  (3 care units each)      ║
+║    Isolation  :  4 beds  (2 care units each)      ║
+║    General    : 12 beds  (1 care unit  each)      ║
+║    Total units: 32                                 ║
+║  Strategy: Best-Fit                              ║
+╚══════════════════════════════════════════════════╝
+
+[23:05:27] Shared memory created: shmid=5  size=740 bytes  beds=20  units=32
+[23:05:27] FIFO created: /tmp/discharge_fifo
+[23:05:27] FIFO created: /tmp/triage_fifo
+[23:05:27] Named semaphore created: /sem_icu_limit  (initial=4)
+[23:05:27] Named semaphore created: /sem_iso_limit  (initial=4)
+[23:05:27] Priority queue initialised (capacity=32)
+[23:05:27] Allocator ready: strategy=Best-Fit  total_units=32  beds=20
+[23:05:27] Admissions Manager started (pid=14401)  strategy=Best-Fit
+[23:05:27] [Receptionist] Thread started, reading from /tmp/triage_fifo
+[23:05:27] [Scheduler] Thread started
+[23:05:27] [Nurse-1] Thread started — monitoring ISOLATION beds
+[23:05:27] [Nurse-0] Thread started — monitoring ICU beds
+[23:05:27] All threads running.  Waiting for SIGTERM / SIGINT to shut down.
+[23:05:27] [Nurse-2] Thread started — monitoring GENERAL beds
+[23:05:27] Send patients via:  echo 'name:age:severity' > /tmp/triage_fifo
+[23:06:30] [Receptionist] Received patient: Taha Sajid  age=19  sev=10  pri=1
+[23:06:30] [Receptionist] Patient 1 (Taha Sajid) queued  queue_size=1
+[23:06:30] [Scheduler] Dequeued patient 1 (Taha Sajid) priority=1
+[23:06:30] [Scheduler] Waiting on ICU semaphore for patient 1
+[23:06:30] [ICU] Bed 0 allocated to patient 1 (Taha Sajid) | units 0-2 | strategy=Best-Fit
+[MEM] Total free: 29 units | Largest block: 3 units | Ext. fragmentation: 89.7%
+[23:06:30] [Scheduler] Admitting patient 1 to bed 0 (ICU)  wait=0 sec
+[23:06:30] Spawned patient_simulator pid=14640 for patient 1
+[23:06:30] [Patient 1] ARRIVED — priority=1  bed=0  type=ICU  pid=14640
+[23:06:30] [Patient 1] TREATMENT STARTED in ICU bed 0
+[23:06:30] [Patient 1] Treatment duration: 7 seconds
+[23:06:37] [Patient 1] DISCHARGE from ICU bed 0 after 7 sec treatment
+[23:06:37] [Patient 1] Discharge notification sent via FIFO
+[23:06:37] [Patient 1] Process exiting (pid=14640)
+[SIGCHLD] Reaped child pid=14640
+[23:06:37] [Nurse-1] Discharge notice for patient 1
+[23:06:50] [Receptionist] Received patient: Muhammad Umar  age=20  sev=6  pri=3
+[23:06:50] [Receptionist] Patient 2 (Muhammad Umar) queued  queue_size=1
+[23:06:50] [Scheduler] Dequeued patient 2 (Muhammad Umar) priority=3
+[23:06:50] [Scheduler] Waiting on Isolation semaphore for patient 2
+[23:06:50] [ISOLATION] Bed 4 allocated to patient 2 (Muhammad Umar) | units 12-13 | strategy=Best-Fit
+[MEM] Total free: 27 units | Largest block: 3 units | Ext. fragmentation: 88.9%
+[23:06:50] [Scheduler] Admitting patient 2 to bed 4 (ISOLATION)  wait=0 sec
+[23:06:50] Spawned patient_simulator pid=14728 for patient 2
+[23:06:50] [Patient 2] ARRIVED — priority=3  bed=4  type=ISOLATION  pid=14728
+[23:06:50] [Patient 2] TREATMENT STARTED in ISOLATION bed 4
+[23:06:50] [Patient 2] Treatment duration: 3 seconds
+[23:06:53] [Patient 2] DISCHARGE from ISOLATION bed 4 after 3 sec treatment
+[23:06:53] [Patient 2] Discharge notification sent via FIFO
+[23:06:53] [Patient 2] Process exiting (pid=14728)
+[SIGCHLD] Reaped child pid=14728
+[23:06:53] [Nurse-1] Discharge notice for patient 2
+[23:06:53] Freeing bed 4 (was occupied by patient 2)
+
+--- Coalescing: before ---
+[P  1][P  1][P  1][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE]
+[23:06:53]   Right-coalesced: merged 4 units starting at unit 12
+[23:06:53]   Right-coalesced: merged 6 units starting at unit 12
+[23:06:53]   Right-coalesced: merged 8 units starting at unit 12
+[23:06:53]   Right-coalesced: merged 9 units starting at unit 12
+[23:06:53]   Right-coalesced: merged 10 units starting at unit 12
+[23:06:53]   Right-coalesced: merged 11 units starting at unit 12
+[23:06:53]   Right-coalesced: merged 12 units starting at unit 12
+[23:06:53]   Right-coalesced: merged 13 units starting at unit 12
+[23:06:53]   Right-coalesced: merged 14 units starting at unit 12
+[23:06:53]   Right-coalesced: merged 15 units starting at unit 12
+[23:06:53]   Right-coalesced: merged 16 units starting at unit 12
+[23:06:53]   Right-coalesced: merged 17 units starting at unit 12
+[23:06:53]   Right-coalesced: merged 18 units starting at unit 12
+[23:06:53]   Right-coalesced: merged 19 units starting at unit 12
+[23:06:53]   Right-coalesced: merged 20 units starting at unit 12
+[23:06:53]   Left-coalesced: merged 23 units starting at unit 9
+[23:06:53]   Left-coalesced: merged 26 units starting at unit 6
+[23:06:53]   Left-coalesced: merged 29 units starting at unit 3
+
+--- Coalescing: after  ---
+[P  1][P  1][P  1][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE][FREE]
+
+[MEM] Total free: 29 units | Largest block: 29 units | Ext. fragmentation: 0.0%
+[23:06:53] [Nurse-1] Bed 4 freed — broadcast bed_freed
+[23:07:08] [Receptionist] Received patient: ALi Raza  age=23  sev=5  pri=3
+[23:07:08] [Receptionist] Patient 3 (ALi Raza) queued  queue_size=1
+[23:07:08] [Scheduler] Dequeued patient 3 (ALi Raza) priority=3
+[23:07:08] [Scheduler] Waiting on Isolation semaphore for patient 3
+[23:07:08] allocate_bed: no ISOLATION bed available for patient 3 (priority 3)
+[23:07:08] [Scheduler] No bed for patient 3 — waiting for discharge
+[23:07:46] Shutdown signal received — stopping threads
+[23:07:46] allocate_bed: no ISOLATION bed available for patient 3 (priority 3)
+[23:07:46] [Scheduler] Thread exiting
+[23:07:46] [Nurse-1] Thread exiting
+[23:07:46] [Nurse-0] Thread exiting
+[23:07:46] [Nurse-2] Thread exiting
+[23:07:46] [Receptionist] Thread exiting
+[23:07:46] === Admissions Manager: Clean Shutdown ===
+[23:07:46] Reaping remaining child processes...
+[23:07:46] Running scheduling simulations on 3 patient records
+
+========================================
+  Scheduling: First-Come First-Served
+  Patients  : 3
+========================================
+ID    Name                 Priority Burst    Start    Finish   Wait    
+--    ----                 -------- -----    -----    ------   ----    
+1     Taha Sajid           1        11       1778263590 1778263601 0       
+2     Muhammad Umar        3        9        1778263610 1778263619 0       
+3     ALi Raza             3        4        1778263628 1778263632 0       
+----------------------------------------
+  Avg Waiting Time   : 0.00 sec
+  Avg Turnaround Time: 8.00 sec
+========================================
+
+[23:07:46] Schedule log written to logs/schedule_log.txt
+
+========================================
+  Scheduling: Priority Scheduling
+  Patients  : 3
+========================================
+ID    Name                 Priority Burst    Start    Finish   Wait    
+--    ----                 -------- -----    -----    ------   ----    
+1     Taha Sajid           1        11       1778263590 1778263601 0       
+2     Muhammad Umar        3        9        1778263610 1778263619 0       
+3     ALi Raza             3        4        1778263628 1778263632 0       
+----------------------------------------
+  Avg Waiting Time   : 0.00 sec
+  Avg Turnaround Time: 8.00 sec
+========================================
+
+[23:07:46] Schedule log written to logs/schedule_log.txt
+
+========================================
+  Scheduling: Shortest Job First
+  Patients  : 3
+========================================
+ID    Name                 Priority Burst    Start    Finish   Wait    
+--    ----                 -------- -----    -----    ------   ----    
+3     ALi Raza             3        4        1778263628 1778263632 0       
+2     Muhammad Umar        3        9        1778263632 1778263641 22      
+1     Taha Sajid           1        11       1778263641 1778263652 51      
+----------------------------------------
+  Avg Waiting Time   : 24.33 sec
+  Avg Turnaround Time: 32.33 sec
+========================================
+
+[23:07:46] Schedule log written to logs/schedule_log.txt
+
+========================================
+  Scheduling: Round Robin
+  Patients  : 3
+========================================
+ID    Name                 Priority Burst    Start    Finish   Wait    
+--    ----                 -------- -----    -----    ------   ----    
+1     Taha Sajid           1        11       0        24       0       
+2     Muhammad Umar        3        9        3        22       0       
+3     ALi Raza             3        4        6        16       0       
+----------------------------------------
+  Avg Waiting Time   : 0.00 sec
+  Avg Turnaround Time: -1778263588.67 sec
+========================================
+
+[23:07:46] Schedule log written to logs/schedule_log.txt
+
+=== Page Table ===
+Page     Patient      Internal Frag  
+----     -------      -------------  
+0        1            0              
+1        1            1              
+Total internal fragmentation: 1 units
+
+
+=== Final Ward Summary ===
+  Total patients served: 1
+  Occupied beds        : 1 / 20
+[23:07:46] mmap patient log closed and synced to disk
+[23:07:46] FIFO removed: /tmp/discharge_fifo
+[23:07:46] FIFO removed: /tmp/triage_fifo
+[23:07:46] Named semaphore removed: /sem_icu_limit
+[23:07:46] Named semaphore removed: /sem_iso_limit
+[23:07:46] Shared memory segment removed (shmid=5)
+[23:07:46] Admissions Manager shutdown complete

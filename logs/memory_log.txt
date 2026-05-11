@@ -1,0 +1,3 @@
+2026-05-08 23:06:30 | free=29 | largest=3 | ext_frag=89.7%
+2026-05-08 23:06:50 | free=27 | largest=3 | ext_frag=88.9%
+2026-05-08 23:06:53 | free=29 | largest=29 | ext_frag=0.0%
